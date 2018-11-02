@@ -5,7 +5,7 @@ class ShelfChanger extends React.Component {
         selectedOption: this.props.shelf
       }
       handleChange = (event) => {
-          console.log(event.target.value);
+          this.props.handleShelf(event.target.value)
       }
     render() {
         const { selectedOption } = this.state;

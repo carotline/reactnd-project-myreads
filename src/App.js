@@ -21,6 +21,26 @@ class BooksApp extends React.Component {
         }))
       })
   }
+  changeShelf = (book, shelf) => {
+    console.log("book", book);
+    console.log("shelf", shelf);
+    BooksAPI.update(book, shelf)
+      .then(() => {
+        const {
+          books
+        } = Object.assign({}, this.state);
+        for(let i = 0; i < books.length; i++) {
+           if(books[i].id === book.id) {
+             books[i].shelf = shelf;
+             break;
+           }
+        }
+        this.setState({
+          ...this.state,
+          books: books
+        })
+      })
+  }
 
   render() {
     const { books } = this.state;
@@ -37,7 +57,8 @@ class BooksApp extends React.Component {
                   <Shelf 
                     key={index}
                     shelf={shelf} 
-                    books={books}>
+                    books={books}
+                    handleShelf={this.changeShelf}>
                   </Shelf>
                 ))}
               </div>
