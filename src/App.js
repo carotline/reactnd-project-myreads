@@ -37,8 +37,7 @@ class BooksApp extends React.Component {
                   <Shelf 
                     key={index}
                     shelf={shelf} 
-                    books={books}
-                    shelves={shelves}>
+                    books={books}>
                   </Shelf>
                 ))}
               </div>
