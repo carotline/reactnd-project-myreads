@@ -1,6 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class ShelfChanger extends React.Component {
+    static propTypes = {
+        shelf: PropTypes.string.isRequired,
+        handleShelf: PropTypes.func.isRequired,
+    }
     handleChange = (event) => {
         //Reverse flow to handle changes
         this.props.handleShelf(event.target.value)

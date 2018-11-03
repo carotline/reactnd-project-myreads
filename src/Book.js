@@ -1,8 +1,12 @@
 import React from 'react'
 import ShelfChanger from './ShelfChanger'
-
+import PropTypes from 'prop-types'
 
 class Book extends React.Component {
+    static propTypes = {
+        book: PropTypes.array.isRequired,
+        handleShelf: PropTypes.func.isRequired,
+    }
     handleShelf = shelf => {
         const {book} = this.props;
         //The callback is getting called.
