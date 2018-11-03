@@ -50,7 +50,7 @@ class Search extends React.Component {
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-                {resultBooks.length > 0 && resultBooks.map(function (book, index) {  // map the new array to list items
+                {resultBooks.length > 0 && query !== '' && resultBooks.map(function (book, index) {  // map the new array to list items
                     return <Book key={index} book={book} handleShelf={handleShelf}></Book>
                   })}
               </ol>
