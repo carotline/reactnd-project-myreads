@@ -6,7 +6,11 @@ import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 
-const shelves = [{ shelf: 'currentlyReading' }, { shelf: 'wantToRead' }, { shelf: 'read' }];
+const shelves = [
+  { shelf: 'currentlyReading' }, 
+  { shelf: 'wantToRead' }, 
+  { shelf: 'read' }
+];
 
 class BooksApp extends React.Component {
   state = {
@@ -15,26 +19,29 @@ class BooksApp extends React.Component {
   componentDidMount() {
     BooksAPI.getAll()
       .then((books) => {
-        console.log('books', books)
         this.setState(() => ({
           books
         }))
       })
   }
   changeShelf = (book, shelf) => {
-    console.log("book", book);
-    console.log("shelf", shelf);
     BooksAPI.update(book, shelf)
       .then(() => {
         const {
           books
         } = Object.assign({}, this.state);
-        for(let i = 0; i < books.length; i++) {
-           if(books[i].id === book.id) {
-             books[i].shelf = shelf;
-             break;
-           }
+        if(!!book.shelf) {
+          for(let i = 0; i < books.length; i++) {
+            if(books[i].id === book.id) {
+              books[i].shelf = shelf;
+              break;
+            }
+          }
+        } else {
+          book.shelf = shelf;
+          books.push(book);
         }
+        
         this.setState({
           ...this.state,
           books: books
@@ -69,7 +76,7 @@ class BooksApp extends React.Component {
           </div>
         )} />
         <Route path='/search' render={() => (
-          <Search />
+          <Search handleShelf={this.changeShelf} />
         )} />
       </div>
     )
