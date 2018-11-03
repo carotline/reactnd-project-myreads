@@ -1,7 +1,8 @@
 import React from 'react'
 
-class ShelfChanger extends React.Component { 
+class ShelfChanger extends React.Component {
       handleChange = (event) => {
+          //Reverse flow to handle changes
           this.props.handleShelf(event.target.value)
       }
     render() {
