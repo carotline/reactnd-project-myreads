@@ -12,21 +12,34 @@ class Search extends React.Component {
         query: '',
         resultBooks: []
     }
-    updateQuery = (query) => {
+    updateQuery = (event) => {
+        const query = event.target.value
         this.setState(() => ({
             query: query
         }))
         if (query.length > 0) {
             this.fetchData(query)
+        } else {
+          this.resultBooks = []
         }
     }
     fetchData = (query) => {
         BooksAPI.search(query)
         .then((books) => {
+            const { selectedBooks } = this.props
+            books.forEach((b1) => {
+              b1.shelf = "none";
+              for(let i = 0; i < selectedBooks.length; i++) {
+                if(b1.id === selectedBooks[i].id) {
+                  b1.shelf = selectedBooks[i].shelf;
+                  break;
+                }
+              }
+            });
             this.setState(() => ({
                 resultBooks: books
             }))
-        })  
+        });  
     }
     
     render() {
@@ -41,13 +54,17 @@ class Search extends React.Component {
                           type="text" 
                           placeholder="Search by title or author"
                           value={query}
-                          onChange={(event) => this.updateQuery(event.target.value)}/>
+                          onChange={this.updateQuery}/>
                     </div>
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
                         {resultBooks.length > 0 && query !== '' && resultBooks.map(function (book, index) {  // map the new array to list items
-                            return <Book key={index} book={book} handleShelf={handleShelf}></Book>
+                            return <Book 
+                                      key={index} 
+                                      book={book} 
+                                      handleShelf={handleShelf}>
+                                    </Book>
                         })}
                     </ol>
                 </div>

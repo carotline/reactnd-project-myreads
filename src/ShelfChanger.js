@@ -11,7 +11,7 @@ class ShelfChanger extends React.Component {
         this.props.handleShelf(event.target.value)
     }
     render() {
-        const selectedOption = this.props.shelf || 'none'
+        const selectedOption = this.props.shelf
         return(
             <div className="book-shelf-changer">
                 <select value={selectedOption} onChange={this.handleChange}>

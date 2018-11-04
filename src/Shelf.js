@@ -23,7 +23,7 @@ function Shelf (props) {
 Shelf.propTypes = {
     books: PropTypes.array.isRequired,
     handleShelf: PropTypes.func.isRequired,
-    shelf: propTypes.string.isRequired
+    shelf: PropTypes.object.isRequired
 };
 
 export default Shelf
