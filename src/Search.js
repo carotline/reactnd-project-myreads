@@ -27,21 +27,27 @@ class Search extends React.Component {
         BooksAPI.search(query)
         .then((books) => {
             const { selectedBooks } = this.props
-            books.forEach((b1) => {
-              b1.shelf = "none";
-              for(let i = 0; i < selectedBooks.length; i++) {
-                if(b1.id === selectedBooks[i].id) {
-                  b1.shelf = selectedBooks[i].shelf;
-                  break;
-                }
-              }
-            });
+            if (books.length > 0) { 
+                this.addShelf(selectedBooks, books)
+            } else {
+              books = []
+            }
             this.setState(() => ({
                 resultBooks: books
             }))
         });  
     }
-    
+    addShelf = (selectedBooks, books) => {
+        books.forEach((b1) => {
+          b1.shelf = "none";
+          for(let i = 0; i < selectedBooks.length; i++) {
+              if(b1.id === selectedBooks[i].id) {
+                  b1.shelf = selectedBooks[i].shelf;
+                  break;
+              }
+          }
+      });
+    }
     render() {
         const { query, resultBooks  } = this.state
         const { handleShelf } = this.props

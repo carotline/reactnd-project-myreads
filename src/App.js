@@ -29,23 +29,22 @@ class BooksApp extends React.Component {
         //Update shelf with APi
         BooksAPI.update(book, shelf)
         .then(() => {
-            const { books } = Object.assign({}, this.state)
-            //If shelf exist change with new one
-            if(!!book.shelf) {
-                for(let i = 0; i < books.length; i++) {
-                    if(books[i].id === book.id) {
-                        books[i].shelf = shelf
-                        break
+            this.setState( prevState => {
+                const newBooks = [...prevState.books]
+                //If no shelf add new one or none
+                if(!book.shelf || book.shelf === "none") {
+                    book.shelf = shelf;
+                    newBooks.push(book);
+                } else {
+                  //If shelf exist change with new one
+                    for(let i = 0; i < newBooks.length; i++) {
+                        if(newBooks[i].id === book.id) {
+                            newBooks[i].shelf = shelf
+                            break;
+                        }
                     }
                 }
-            } else {
-                //If no shelf add new one
-                book.shelf = shelf
-                books.push(book)
-            }
-            this.setState({
-                ...this.state,
-                books: books
+                return { books: newBooks }
             })
         })
     }
